@@ -8,7 +8,7 @@ T = TypeVar('T')
 
 
 def safely_get_value(dct: Mapping, key: Any, default:
-                     Union[Any, T] = None) -> Union[T, None]:
+                     Union[T, None] = None) -> Union[Any, T]:
     '''Retrieves a value from a dict using a given key.
     '''
     if key in dct:
