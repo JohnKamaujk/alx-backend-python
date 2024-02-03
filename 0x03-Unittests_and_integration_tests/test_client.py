@@ -19,7 +19,7 @@ class TestGithubOrgClient(unittest.TestCase):
                  org_name: str,
                  payload: Dict,
                  mocked_get_json: MagicMock) -> None:
-        """Tests the `GithubOrgClient.org` function output."""
+        """Tests the `GithubOrgClient.org` method output."""
         mocked_get_json.return_value = MagicMock(return_value=payload)
         github_client = GithubOrgClient(org_name)
         self.assertEqual(github_client.org(), payload)
