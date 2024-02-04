@@ -33,7 +33,6 @@ class TestGithubOrgClient(unittest.TestCase):
     ])
     def test_public_repos_url(self, org_name: str, org_payload: Dict) -> None:
         """Tests the `GithubOrgClient._public_repos_url` property."""
-
         # Use patch as a context manager to mock the org property
         with patch("client.GithubOrgClient.org",
                    new_callable=PropertyMock,
