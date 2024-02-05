@@ -92,23 +92,25 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         """Sets up class fixtures before running tests."""
-        url_payload_mapping = {
+        route_payload = {
             'https://api.github.com/orgs/google': cls.org_payload,
             'https://api.github.com/orgs/google/repos': cls.repos_payload,
         }
 
-        def get_mock_response(url):
-            if url in url_payload_mapping:
-                return Mock(**{'json.return_value': url_payload_mapping[url]})
+        def get_payload(url):
+            if url in route_payload:
+                return Mock(**{'json.return_value': route_payload[url]})
             return HTTPError
 
-        cls.get_patcher = patch("requests.get", side_effect=get_mock_response)
+        cls.get_patcher = patch("requests.get", side_effect=get_payload)
         cls.get_patcher.start()
 
     def test_public_repos(self) -> None:
         """Tests the `public_repos` method."""
-        repos = GithubOrgClient("google").public_repos()
-        self.assertEqual(repos, self.expected_repos)
+        self.assertEqual(
+            GithubOrgClient("google").public_repos(),
+            self.expected_repos,
+        )
 
     @classmethod
     def tearDownClass(cls) -> None:
