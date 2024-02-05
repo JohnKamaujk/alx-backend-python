@@ -100,9 +100,7 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
         def get_mock_response(url):
             if url in url_payload_mapping:
                 return Mock(**{'json.return_value': url_payload_mapping[url]})
-            else:
-                raise HTTPError("Mocked HTTPError",
-                                response=Mock(status_code=404))
+            return HTTPError
 
         cls.get_patcher = patch("requests.get", side_effect=get_mock_response)
         cls.get_patcher.start()
